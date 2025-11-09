@@ -1,8 +1,26 @@
 # RV64 Core — RISC-V 64-bit Processor Core Implementation
 
-This repository contains the initial materials for a RISC-V 64-bit processor core implementation and its specification documentation.
+## Repository Description
 
-The formal implementation specification is written with Sphinx and lives in the `docs/` directory. It covers architecture, design elements, memory maps, testing and verification, and electrical characteristics.
+This repository contains the collaborative development of a RISC-V 64-bit processor core implementation (RV64IMAC) as part of the System on Chip course at Hochschule Ravensburg-Weingarten. The project includes both the hardware design (RTL implementation in VHDL/SystemVerilog) and comprehensive specification documentation built with Sphinx.
+
+The formal implementation specification lives in the `docs/` directory and covers architecture, design elements, memory maps, testing and verification, and electrical characteristics. **All team members contribute to a single unified specification document** that will be submitted as the final deliverable.
+
+### Project Components
+
+The processor core is divided into the following major components, each developed in a dedicated feature branch:
+
+- **Clock**: Clock generation and distribution
+- **Register File & Top Muxes and Adders**: General-purpose register file and datapath multiplexers
+- **ALU**: Arithmetic Logic Unit implementation
+- **Instruction Decoder**: Instruction decode and control signal generation
+- **I-Mem**: Instruction memory interface
+- **D-Mem**: Data memory interface
+- **BUS**: Wishbone bus interface implementation
+- **GPIO**: General Purpose I/O peripherals
+- **IRQ**: Interrupt request handling
+- **Toolchain**: Development tools and compilation environment
+- **Top-Level**: Integration and top-level module
 
 Important links
 
@@ -11,7 +29,177 @@ Important links
 - Built LaTeX output (local): `docs/build/latex/` (contains the generated .tex and, after building, the PDF `RV64_Specification.pdf`)
 - Hosted (GitHub Pages): https://menazaa.github.io/RV64I_RWU/
 
-Quick overview
+---
+
+## Development Workflow
+
+### Initial Setup (First Time Only)
+
+1. **Clone the repository**:
+   ```powershell
+   git clone https://github.com/Menazaa/RV64I_RWU.git
+   cd RV64I_RWU
+   ```
+
+2. **Fetch all remote branches**:
+   ```powershell
+   git fetch --all
+   ```
+
+3. **View all available branches**:
+   ```powershell
+   git branch -a
+   ```
+
+### Standard GitHub Workflow (For All Contributors)
+
+Follow this workflow for every feature or bug fix:
+
+1. **Always start from the latest `main` branch**:
+   ```powershell
+   git checkout main
+   git pull origin main
+   ```
+
+2. **Create a new feature branch** (use descriptive names):
+   ```powershell
+   git checkout -b feature/your-feature-name
+   # Examples:
+   # git checkout -b feature/alu-implementation
+   # git checkout -b fix/register-file-bug
+   # git checkout -b docs/memory-map-section
+   ```
+
+3. **Work on your feature**:
+   - Make your changes
+   - Commit regularly with clear messages:
+     ```powershell
+     git add .
+     git commit -m "Add ALU arithmetic operations"
+     ```
+
+4. **Keep your branch updated** (if development takes multiple days):
+   ```powershell
+   git checkout main
+   git pull origin main
+   git checkout feature/your-feature-name
+   git merge main
+   # Resolve any conflicts if they occur
+   ```
+
+5. **Push your branch to GitHub**:
+   ```powershell
+   git push origin feature/your-feature-name
+   ```
+
+6. **Create a Pull Request (PR)**:
+   - Go to https://github.com/Menazaa/RV64I_RWU
+   - Click "Pull requests" → "New pull request"
+   - Select your feature branch to merge into `main`
+   - Add a clear description of your changes
+   - Request review from team members
+   - Wait for approval before merging
+
+7. **After PR is merged**:
+   ```powershell
+   git checkout main
+   git pull origin main
+   git branch -d feature/your-feature-name  # Delete local branch
+   ```
+
+### Working with Existing Component Branches
+
+If you need to work on an existing component branch (e.g., `ALU`, `Clock`, etc.):
+
+1. **Checkout the existing branch**:
+   ```powershell
+   git checkout -b ALU origin/ALU
+   ```
+
+2. **Make your changes and commit**
+
+3. **Push to the same branch**:
+   ```powershell
+   git push origin ALU
+   ```
+
+4. **Create a Pull Request** to merge the component branch into `main` when ready
+
+---
+
+## Contributing to the Specification
+
+**Important**: We maintain **ONE unified specification document** that all team members contribute to. This specification will be our final submission.
+
+### Specification Structure
+
+The specification is organized into the following chapters (located in `docs/source/`):
+
+1. **Document Overview** (`chapter1_document_overview.rst`)
+2. **Product Overview** (`chapter2_product_overview.rst`)
+3. **Architecture Concepts** (`chapter3_architecture_concepts.rst`)
+4. **Design Elements** (`chapter4_design_elements.rst`)
+5. **Test & Debug** (`chapter5_test_debug.rst`)
+6. **Memory Maps** (`chapter6_memory_maps.rst`)
+7. **Electrical Characteristics** (`chapter7_electrical_characteristics.rst`)
+
+### How to Contribute to Your Section
+
+1. **Identify your assigned section** (based on your component):
+   - **Clock** → Contribute to Chapter 4 (Design Elements - Clock subsection)
+   - **Register File** → Contribute to Chapter 4 (Design Elements - Register File subsection)
+   - **ALU** → Contribute to Chapter 4 (Design Elements - ALU subsection)
+   - **Instruction Decoder** → Contribute to Chapter 4 (Design Elements - Decoder subsection)
+   - **I-Mem / D-Mem** → Contribute to Chapter 4 (Memory subsections) and Chapter 6 (Memory Maps)
+   - **BUS** → Contribute to Chapter 4 (Bus Interface) and Chapter 3 (Architecture)
+   - **GPIO** → Contribute to Chapter 4 (Peripherals) and Chapter 6 (Memory Maps)
+   - **IRQ** → Contribute to Chapter 4 (Interrupt Controller) and Chapter 5 (Debug)
+   - **Top-Level** → Contribute to Chapter 3 (Architecture - Integration)
+
+2. **Create a feature branch for your documentation**:
+   ```powershell
+   git checkout main
+   git pull origin main
+   git checkout -b docs/your-component-section
+   # Example: git checkout -b docs/alu-design-elements
+   ```
+
+3. **Edit the appropriate `.rst` file** in `docs/source/`:
+   - Use reStructuredText (RST) syntax
+   - Add diagrams, tables, and code blocks as needed
+   - Follow the existing formatting style
+   - Include references to your RTL implementation
+
+4. **Build and preview your changes locally**:
+   ```powershell
+   sphinx-build -b html -j auto docs/source docs/build/html
+   # Open docs/build/html/index.html in your browser
+   ```
+
+5. **Commit and push your documentation changes**:
+   ```powershell
+   git add docs/source/
+   git commit -m "Add ALU design documentation to Chapter 4"
+   git push origin docs/your-component-section
+   ```
+
+6. **Create a Pull Request** with your documentation updates:
+   - Clearly describe which section you modified
+   - Tag relevant team members for review
+   - Ensure the documentation builds without errors
+
+### Documentation Best Practices
+
+- **Be specific**: Include detailed descriptions of your component's functionality
+- **Add diagrams**: Use block diagrams, timing diagrams, and state machines where appropriate
+- **Include code snippets**: Show relevant RTL code examples
+- **Cross-reference**: Link to other sections when referencing other components
+- **Keep it consistent**: Follow the same style and terminology as existing sections
+- **Update regularly**: Keep documentation in sync with your RTL implementation
+
+---
+
+## Quick overview
 
 - Project: RV64 Core — a single-cycle RISC-V 64-bit processor core implementation (RV64IMAC)
 - Author / Affiliation: Mohamed — Hochschule Ravensburg-Weingarten (System on a Chip)
@@ -26,7 +214,9 @@ Key features (summary)
 - Wishbone bus (I/D) interfaces, JTAG debug module
 - Deliverables planned: synthesizable RTL (VHDL/SystemVerilog), testbenches, verification environment, and documentation
 
-Build the documentation locally
+---
+
+## Build the documentation locally
 
 1. Install Python dependencies (recommended in a virtualenv):
 
@@ -55,3 +245,14 @@ On Windows (if `latexmk` available in PATH):
 cd docs\build\latex
 latexmk -pdf -interaction=nonstopmode -halt-on-error
 ```
+
+---
+
+## Project Team & Contact
+
+- **Institution**: Hochschule Ravensburg-Weingarten
+- **Course**: System on Chip
+- **Project Lead**: Mohamed
+- **Repository**: https://github.com/Menazaa/RV64I_RWU
+
+For questions or issues, please open a GitHub issue or contact the project lead.
