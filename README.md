@@ -252,7 +252,6 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error
 
 - **Institution**: Hochschule Ravensburg-Weingarten
 - **Course**: System on Chip
-- **Project Lead**: Mohamed
-- **Repository**: https://github.com/Menazaa/RV64I_RWU
+- **Repository**: https://github.com/RWU-SOC/RV64I_RWU
 
 For questions or issues, please open a GitHub issue or contact the project lead.
