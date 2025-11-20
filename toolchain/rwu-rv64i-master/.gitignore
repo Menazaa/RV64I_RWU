@@ -1,0 +1,10 @@
+# LaTeX clutter
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# Editors & OS noise
+.DS_Store
+Thumbs.db
